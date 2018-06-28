@@ -431,6 +431,8 @@ ContactDataServices.address = function(customOptions){
 
 			// Fire an event to say we've got the formatted address
 			instance.events.trigger("post-formatting-search", data);
+
+			console.log(data.address);
 			
 			if(data.address && data.address.length > 0){				
 

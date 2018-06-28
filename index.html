@@ -264,43 +264,51 @@
 
 		<label for="address-input" class="toggle">Address</label>
 		<input type="text" name="address-input" id="address-input" class="toggle">
-
-		<div class="formatted-address hidden">
-			<label for="addressLine1">Address line 1</label>
-			<input type="text" name="addressLine1" id="addressLine1">
-
-			<label for="addressLine2">Address line 2</label>
-			<input type="text" name="addressLine2" id="addressLine2">
-
-			<label for="city">City</label>
-			<input type="text" name="city" id="city">
-
-			<label for="state">State</label>
-			<input type="text" name="state" id="state">
-
-			<label for="zip">Zip</label>
-			<input type="text" name="zip" id="zip">
-		</div>
 	</form>
 
-	<script src="dist/js/contact-data-services.min.js"></script>
+
+	<div style="border:black 1px solid; height:300px; width:450px;" class="formatted-address" hidden>
+		<p id="addressLine1"></p> 
+		<p id="addressLine2"></p> 
+		<p id="city"></p> 
+		<p id="state"></p> 
+		<p id="zip"></p> 
+	</div>
+
+	<div class="formatted-json">
+	</div>
+
+		
+	
+	<script src="src/js/_scaffolding.js"></script>
+	<script src="src/js/_defaults.js"></script>
+	<script src="src/js/_event-factory.js"></script>
+	<script src="src/js/_translations.js"></script>
+	<script src="src/js/_ua.js"></script>
+	<script src="src/js/_urls.js"></script>
+	<script src="src/js/main-address.js"></script>
 	<script>
 		// Set the custom options
 		var options = {
+			token: "ENTER YOUR TOKEN",
 			elements: {
 				input: document.querySelector("input[name='address-input']"),
 				countryList: document.querySelector("select"),
-				addressLine1: document.querySelector("input[name='addressLine1']"),
-				addressLine2: document.querySelector("input[name='addressLine2']"),
-				addressLine3: document.querySelector("input[name='addressLine2']"),
-				locality: document.querySelector("input[name='city']"),
-				province: document.querySelector("input[name='state']"),
-				postalCode: document.querySelector("input[name='zip']")
+				addressLine1: document.querySelector("#addressLine1"),
+				addressLine2: document.querySelector("#addressLine2"),
+				addressLine3: document.querySelector("#addressLine2"),
+				locality: document.querySelector("#city"),
+				province: document.querySelector("#state"),
+				postalCode: document.querySelector("#zip")
 			},
 		};
 
 		// Initialise this instance
 		var address = new ContactDataServices.address(options);
+
+		address.events.on("post-formatting-search", function(){
+			document.querySelector(".formatted-address").removeAttribute("hidden");
+		})
 
 		// Show the spinner while we're searching for the formatted address
 		address.events.on("pre-formatting-search", function() {
